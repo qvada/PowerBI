@@ -1,0 +1,6 @@
+Bar_Revenue = 
+IF(VALUES('Axis variants'[Axis Label]) = "Average",<here your customer measure>, 
+IF(VALUES('Axis variants'[Axis Label]) = "Difference", <here your customer measure>,
+IF(VALUES('Axis variants'[Axis Label]) = "Mediaan", <here your customer measure>,
+CALCULATE([Revenue],
+ INTERSECT(ALL(Dates[Date]), VALUES('Axis variants'[Date]))))))
