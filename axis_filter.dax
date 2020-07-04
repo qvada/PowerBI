@@ -1,0 +1,11 @@
+Axis Filter = 
+VAR FrequencyCode =IF(HASONEVALUE(Frequency[Axis Type]), VALUES(Frequency[Axis Type]), BLANK())
+VAR NrOfPeriods = MIN('Tally table'[Tally Table Number])
+VAR CurrentDate = MAX(Dates[Date])
+VAR TallyDate = EOMONTH(CurrentDate, NrOfPeriods)
+VAR StartDate = IF(TallyDate < CurrentDate, TallyDate-1, CurrentDate-1)
+VAR EndDate = IF(TallyDate > CurrentDate, TallyDate-1, CurrentDate)
+VAR AxisDates = CALCULATETABLE(FILTER('Axis variants', 'Axis variants'[Date] > StartDate && 'Axis variants'[Date] < EndDate 
+            && 'Axis variants'[Axis Type] = FrequencyCode || 'Axis variants'[Axis Year] = 0))
+VAR Result = CALCULATE(IF(COUNTROWS(AxisDates)>0,1,BLANK()))
+RETURN Result
